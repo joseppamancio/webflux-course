@@ -44,7 +44,7 @@ class UserServiceTest {
         Mono<User> result = service.save(request); // result é um publisher
 
         StepVerifier.create(result)         // aciona o publisher e faz as verificações
-                .expectNextMatches(Objects::nonNull)
+                .expectNextMatches(user -> user.getClass() == User.class)
                 .expectComplete()
                 .verify();
 
@@ -80,5 +80,24 @@ class UserServiceTest {
                 .verify();
 
         Mockito.verify(repository, times(1)).findAll();
+    }
+
+    @Test
+    void testUpdate() {
+        UserRequest request = new UserRequest("Alex", "alexoliveira", "123");
+        User entity = User.builder().build();
+
+        when(mapper.toEntity(any(UserRequest.class), any(User.class))).thenReturn(entity);
+        when(repository.findById(anyString())).thenReturn(Mono.just(entity));
+        when(repository.save(any(User.class))).thenReturn(Mono.just(entity));
+
+        Mono<User> result = service.update("123", request); // result é um publisher
+
+        StepVerifier.create(result)         // aciona o publisher e faz as verificações
+                .expectNextMatches(user -> user.getClass() == User.class)
+                .expectComplete()
+                .verify();
+
+        Mockito.verify(repository, times(1)).save(any(User.class));
     }
 }
