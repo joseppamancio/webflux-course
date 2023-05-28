@@ -28,7 +28,8 @@ public class ValidationError extends StandardError implements Serializable {
     @Getter
     @AllArgsConstructor
     private static final class FieldError {
-        private  String fieldname;
+        private  String fieldName;
         private String message;
     }
 }
+
