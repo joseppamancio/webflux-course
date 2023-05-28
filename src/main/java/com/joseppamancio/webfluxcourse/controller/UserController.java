@@ -1,7 +1,10 @@
 package com.joseppamancio.webfluxcourse.controller;
 
+import com.joseppamancio.webfluxcourse.model.request.UserRequest;
+import com.joseppamancio.webfluxcourse.model.response.UserResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 public interface UserController {
